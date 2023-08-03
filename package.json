@@ -6,7 +6,7 @@
     "gulp-typescript": "^6.0.0-alpha.1",
     "typescript": "^5.1.6"
   },
-  "name": "react-native-error-boundary",
+  "name": "react-native-component-boundary",
   "version": "1.0.0",
   "main": "gulpfile.js",
   "scripts": {
@@ -14,12 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sitorhy/react-native-error-boundary.git"
+    "url": "git+https://github.com/sitorhy/react-native-component-boundary.git"
   },
   "author": "sitorhy",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sitorhy/react-native-error-boundary/issues"
+    "url": "https://github.com/sitorhy/react-native-component-boundary/issues"
   },
-  "homepage": "https://github.com/sitorhy/react-native-error-boundary#readme"
+  "homepage": "https://github.com/sitorhy/react-native-component-boundary#readme"
 }
