@@ -17,7 +17,8 @@ gulp.task("build", async () => {
         repository,
         author,
         license,
-        keywords
+        keywords,
+		description
     } = info;
 
     gulp.src(LIB_HOME + "/**/*.ts")
@@ -48,7 +49,8 @@ gulp.task("build", async () => {
         repository,
         author,
         license,
-        keywords
+        keywords,
+		description
     }, null, 2), {
         flag: "w"
     });

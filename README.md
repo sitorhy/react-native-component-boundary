@@ -1,9 +1,9 @@
-# react-native-error-boundary
+# react-native-component-boundary
 
 ## Usage
 
 ```
-import useErrorBoundary from 'react-native-error-boundary';
+import useErrorBoundary from 'react-native-component-boundary';
 import ReactNative from 'react-native';
 
 export default useErrorBoundary(ReactNative, {

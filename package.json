@@ -6,8 +6,9 @@
     "gulp-typescript": "^6.0.0-alpha.1",
     "typescript": "^5.1.6"
   },
+  "description": "React-Native error boundary component",
   "name": "react-native-component-boundary",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "gulpfile.js",
   "scripts": {
     "build": "gulp build > ouput.txt"
