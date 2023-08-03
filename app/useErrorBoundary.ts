@@ -1,6 +1,14 @@
-import installErrorBoundary, {ContextType} from './lib';
-import ReactNative from 'react-native';
+import useErrorBoundary from './lib';
+import ReactNative, {Alert} from 'react-native';
+import React from "react";
 
-const context: ContextType = installErrorBoundary(ReactNative);
+export default useErrorBoundary(ReactNative, {
+    enable: true,
+    fallbackRender: function (fallback) {
+        Alert.alert('Uncaught Exception', `${fallback.error}`);
+    },
+    fallbackComponent: function (fallback) {
+        return React.createElement(ReactNative.Text, {}, `${fallback.pointcut.name}: ${fallback.error}`);
+    }
+});
 
-export default context;
