@@ -5,18 +5,18 @@ export default [
     },
     {
         name: 'TouchableOpacity',
-        handlers: ['onPress']
+        handlers: ['onHoverIn', 'onHoverOut', 'onLongPress', 'onPress', 'onPressIn', 'onPressOut']
     },
     {
         name: 'TouchableWithoutFeedback',
-        handlers: ['onPress']
+        handlers: ['onHoverIn', 'onHoverOut', 'onLongPress', 'onPress', 'onPressIn', 'onPressOut']
     },
     {
         name: 'TouchableHighlight',
-        handlers: ['onPress']
+        handlers: ['onHoverIn', 'onHoverOut', 'onLongPress', 'onPress', 'onPressIn', 'onPressOut']
     },
     {
         name: 'Pressable',
-        handlers: ['onPress']
+        handlers: ['onHoverIn', 'onHoverOut', 'onLongPress', 'onPress', 'onPressIn', 'onPressOut']
     }
 ];

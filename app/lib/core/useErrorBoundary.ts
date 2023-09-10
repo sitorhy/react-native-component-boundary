@@ -5,11 +5,11 @@ export default function useErrorBoundary(
     ReactNative: { [prop: string]: any },
     outerHandler: Function,
     pointcut: ComponentPointcut
-) {
-    return function () {
+): Function {
+    return function (...args: any[]) {
         try {
             if (typeof outerHandler === 'function') {
-                return outerHandler.apply(undefined, arguments);
+                return outerHandler.apply(undefined, args);
             }
         } catch (e) {
             try {

@@ -1,7 +1,6 @@
 import React from "react";
 import {ComponentPointcut, FallbackProps} from './components/common';
 import withBoundaryContainer from './core/withBoundaryContainer';
-import withErrorBoundary from './core/withErrorBoundary';
 import useErrorBoundary from './core/useErrorBoundary';
 import withTarget from './core/withTarget';
 
@@ -9,18 +8,19 @@ import CoreComponents from './components/core';
 import AndroidComponents from './components/android';
 import IosComponents from './components/ios';
 
+
+function EmptyFunctionComponent() {
+    return null;
+}
+
 export interface ContextType {
     useErrorBoundary: (
         outerHandler: Function,
         pointcut: ComponentPointcut
-    ) => ReturnType<typeof useErrorBoundary> | Function;
+    ) => Function;
     withBoundaryContainer: (
         pointcut: ComponentPointcut
-    ) => ReturnType<typeof withBoundaryContainer> | any;
-    withErrorBoundary: (
-        Component: (...args: any[]) => React.JSX.Element,
-        pointcut: ComponentPointcut
-    ) => ReturnType<typeof withErrorBoundary> | React.JSX.ElementType;
+    ) => React.ComponentType;
 }
 
 export default function (
@@ -30,7 +30,7 @@ export default function (
         components?: ComponentPointcut[],
         fallbackComponent?: (
             props: FallbackProps
-        ) => React.JSX.Element;
+        ) => React.ReactNode;
         fallbackRender?: (props: FallbackProps) => any;
     }
 ): ContextType {
@@ -43,7 +43,7 @@ export default function (
         },
         withBoundaryContainer: (pointcut: ComponentPointcut) => {
             if (!options.enable) {
-                return pointcut.component;
+                return pointcut.component || EmptyFunctionComponent;
             }
             if (typeof pointcut.fallbackRender !== "function") {
                 pointcut.fallbackRender = options.fallbackRender;
@@ -52,18 +52,6 @@ export default function (
                 pointcut.fallbackComponent = options.fallbackComponent;
             }
             return withBoundaryContainer(ReactNative, pointcut);
-        },
-        withErrorBoundary: (Component: (...args: any[]) => React.JSX.Element, pointcut: ComponentPointcut) => {
-            if (!options.enable) {
-                return Component;
-            }
-            if (typeof pointcut.fallbackRender !== "function") {
-                pointcut.fallbackRender = options.fallbackRender;
-            }
-            if (typeof pointcut.fallbackComponent !== "function") {
-                pointcut.fallbackComponent = options.fallbackComponent;
-            }
-            return withErrorBoundary(ReactNative, Component, pointcut);
         }
     };
 

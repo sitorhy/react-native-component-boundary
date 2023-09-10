@@ -7,7 +7,8 @@ function Test1() {
     return <Text>{[1, 2, null].map(i => i.toString()).join(' ,')}</Text>
 }
 
-const TestHoc = ErrorBoundary.withErrorBoundary(Test1, {
+const TestHoc = ErrorBoundary.withBoundaryContainer({
+    component: Test1,
     name: 'Test1'
 });
 
@@ -25,6 +26,7 @@ function App() {
     );
 }
 
-export default ErrorBoundary.withErrorBoundary(App, {
+export default ErrorBoundary.withBoundaryContainer({
+    component: App,
     name: 'App'
 });
