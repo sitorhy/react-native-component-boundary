@@ -1,6 +1,6 @@
-import createFallbackRender from './createFallbackRender';
-import withBoundaryContainer from './withBoundaryContainer';
-import {ComponentPointcut} from '../components/common';
+import createFallbackRender from "./createFallbackRender";
+import withBoundaryContainer from "./withBoundaryContainer";
+import {ComponentPointcut} from "../components/common";
 
 export default function withTarget(
     ReactNative: { [prop: string]: any },
@@ -28,11 +28,11 @@ export default function withTarget(
         if (pointcut.name) {
             const component = ReactNative[pointcut.name];
             pointcut.accepted =
-                typeof component === 'function' ||
-                (typeof component === 'object' &&
-                    typeof component.render === 'function');
+                typeof component === "function" ||
+                (typeof component === "object" &&
+                    typeof component.render === "function");
             if (pointcut.accepted && !pointcut.component) {
-                if (typeof pointcut.fallbackRender !== 'function') {
+                if (typeof pointcut.fallbackRender !== "function") {
                     pointcut.fallbackRender = defaultFallbackRender;
                 }
                 pointcut.component = component;

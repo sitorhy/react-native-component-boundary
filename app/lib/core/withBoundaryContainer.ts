@@ -1,46 +1,66 @@
-import React from 'react';
-import {ComponentPointcut, shouldConstruct} from '../components/common';
-import unexpectedCatch from './unexpectedCatch';
-import useErrorBoundary from './useErrorBoundary';
+import React from "react";
+import {ComponentPointcut} from "../components/common";
+import unexpectedCatch from "./unexpectedCatch";
+import useErrorBoundary from "./useErrorBoundary";
+
+function EmptyFunctionComponent() {
+    return null;
+}
+
+type ContainerProps = { [key: string]: any };
+
+type ContainerState = {
+    error: unknown | null;
+    errorInfo: React.ErrorInfo | null;
+};
 
 export default function withBoundaryContainer(
     ReactNative: { [prop: string]: any },
     pointcut: ComponentPointcut
 ): React.ComponentType {
-    return function (props: { [k: string]: any }) {
-        try {
-            const injection = Object.assign({}, props);
+    return class extends React.Component<ContainerProps, ContainerState> {
+
+        state: ContainerState = {
+            error: null,
+            errorInfo: null
+        };
+
+        componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+            this.setState({
+                error,
+                errorInfo
+            });
+        }
+
+        render() {
+            if (this.state.error) {
+                if (typeof pointcut.fallbackComponent === "function") {
+                    try {
+                        const fallbackNode = pointcut.fallbackComponent({
+                            error: this.state.error,
+                            errorInfo: this.state.errorInfo,
+                            pointcut
+                        });
+                        return React.isValidElement(fallbackNode)
+                            ? fallbackNode
+                            : null;
+                    } catch (ignore) {
+                        unexpectedCatch(ReactNative, ignore);
+                        return null;
+                    }
+                }
+            }
+
+            const injection = Object.assign({}, this.props);
             if (Array.isArray(pointcut.handlers) && pointcut.handlers.length) {
                 pointcut.handlers.forEach(i => {
                     Object.assign(injection, {
-                        [i]: useErrorBoundary(ReactNative, props[i], pointcut)
+                        [i]: useErrorBoundary(ReactNative, this.props[i], pointcut)
                     });
                 });
             }
-            if (pointcut.component) {
-                if (shouldConstruct(pointcut.component)) {
-                    return React.createElement(pointcut.component, injection);
-                } else {
-                    return (pointcut.component as React.FunctionComponent)(injection);
-                }
-            } else {
-                return null;
-            }
-        } catch (e) {
-            if (typeof pointcut.fallbackComponent === 'function') {
-                try {
-                    const fallbackNode = pointcut.fallbackComponent({
-                        error: e,
-                        pointcut
-                    });
-                    return React.isValidElement(fallbackNode)
-                        ? fallbackNode
-                        : null;
-                } catch (ignore) {
-                    unexpectedCatch(ReactNative, ignore);
-                    return null;
-                }
-            }
+
+            return React.createElement(pointcut.component || EmptyFunctionComponent, injection);
         }
     };
 }

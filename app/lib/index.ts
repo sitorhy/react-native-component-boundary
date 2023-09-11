@@ -1,13 +1,12 @@
 import React from "react";
-import {ComponentPointcut, FallbackProps} from './components/common';
-import withBoundaryContainer from './core/withBoundaryContainer';
-import useErrorBoundary from './core/useErrorBoundary';
-import withTarget from './core/withTarget';
+import {ComponentPointcut, FallbackProps} from "./components/common";
+import withBoundaryContainer from "./core/withBoundaryContainer";
+import useErrorBoundary from "./core/useErrorBoundary";
+import withTarget from "./core/withTarget";
 
-import CoreComponents from './components/core';
-import AndroidComponents from './components/android';
-import IosComponents from './components/ios';
-
+import CoreComponents from "./components/core";
+import AndroidComponents from "./components/android";
+import IosComponents from "./components/ios";
 
 function EmptyFunctionComponent() {
     return null;

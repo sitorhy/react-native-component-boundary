@@ -5,10 +5,10 @@ export default function unexpectedCatch(
     try {
         if (
             ReactNative &&
-            typeof ReactNative.Alert === 'function' &&
-            typeof ReactNative.Alert.alert === 'function'
+            typeof ReactNative.Alert === "function" &&
+            typeof ReactNative.Alert.alert === "function"
         ) {
-            ReactNative.Alert.alert('Unexpected Error', `${e}`);
+            ReactNative.Alert.alert("Unexpected Error", `${e}`);
         }
     } catch (ignore) {
         console.error(e);
