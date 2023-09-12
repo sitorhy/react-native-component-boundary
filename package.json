@@ -4,6 +4,7 @@
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
+    "react": "^18.2.0",
     "typescript": "^5.1.6"
   },
   "description": "React-Native error boundary component",
@@ -22,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/sitorhy/react-native-component-boundary/issues"
   },
-  "homepage": "https://github.com/sitorhy/react-native-component-boundary#readme"
+  "homepage": "https://github.com/sitorhy/react-native-component-boundary#readme",
+  "devDependencies": {
+    "@types/react": "^18.2.21"
+  }
 }
