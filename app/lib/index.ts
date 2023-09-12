@@ -13,34 +13,34 @@ function EmptyFunctionComponent() {
 }
 
 export interface ContextType {
-    useErrorBoundary: (
+    useErrorBoundary: <P>(
         outerHandler: Function,
-        pointcut: ComponentPointcut
+        pointcut: ComponentPointcut<P>
     ) => Function;
-    withBoundaryContainer: (
-        pointcut: ComponentPointcut
-    ) => React.ComponentType;
+    withBoundaryContainer: <P>(
+        pointcut: ComponentPointcut<P>
+    ) => React.ComponentType<P>;
 }
 
 export default function (
     ReactNative: { [prop: string]: any },
     options: {
         enable?: boolean,
-        components?: ComponentPointcut[],
+        components?: ComponentPointcut<any>[],
         fallbackComponent?: (
-            props: FallbackProps
+            props: FallbackProps<any>
         ) => React.ReactNode;
-        fallbackRender?: (props: FallbackProps) => any;
+        fallbackRender?: (props: FallbackProps<any>) => any;
     }
 ): ContextType {
     const context: ContextType = {
-        useErrorBoundary: (outerHandler: Function, pointcut: ComponentPointcut) => {
+        useErrorBoundary: <P>(outerHandler: Function, pointcut: ComponentPointcut<P>) => {
             if (!options.enable) {
                 return outerHandler;
             }
             return useErrorBoundary(ReactNative, outerHandler, pointcut);
         },
-        withBoundaryContainer: (pointcut: ComponentPointcut) => {
+        withBoundaryContainer: <P>(pointcut: ComponentPointcut<P>) => {
             if (!options.enable) {
                 return pointcut.component || EmptyFunctionComponent;
             }
@@ -54,7 +54,7 @@ export default function (
         }
     };
 
-    const Components: ComponentPointcut[] = options.components || CoreComponents.concat(AndroidComponents).concat(IosComponents);
+    const Components: ComponentPointcut<any>[] = options.components || CoreComponents.concat(AndroidComponents).concat(IosComponents);
     if (options) {
         Components.forEach(i => {
             if (typeof options.fallbackRender !== "function") {

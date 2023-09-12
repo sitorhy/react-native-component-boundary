@@ -1,10 +1,10 @@
 import unexpectedCatch from "./unexpectedCatch";
 import {ComponentPointcut} from "../components/common";
 
-export default function useErrorBoundary(
+export default function useErrorBoundary<P>(
     ReactNative: { [prop: string]: any },
     outerHandler: Function,
-    pointcut: ComponentPointcut
+    pointcut: ComponentPointcut<P>
 ): Function {
     return function (...args: any[]) {
         try {

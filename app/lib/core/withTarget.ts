@@ -2,9 +2,9 @@ import createFallbackRender from "./createFallbackRender";
 import withBoundaryContainer from "./withBoundaryContainer";
 import {ComponentPointcut} from "../components/common";
 
-export default function withTarget(
+export default function withTarget<P>(
     ReactNative: { [prop: string]: any },
-    pointcuts: ComponentPointcut[]
+    pointcuts: ComponentPointcut<P>[]
 ) {
     if (!pointcuts || !pointcuts.length) {
         return;
@@ -22,7 +22,7 @@ export default function withTarget(
         set?(v: any): void;
     }[] = [];
 
-    const defaultFallbackRender = createFallbackRender(ReactNative);
+    const defaultFallbackRender = createFallbackRender<P>(ReactNative);
 
     pointcuts.forEach(function (pointcut) {
         if (pointcut.name) {
