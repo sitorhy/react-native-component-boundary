@@ -14,11 +14,11 @@ type ContainerState = {
     errorInfo: React.ErrorInfo | null;
 };
 
-export default function withBoundaryContainer(
+export default function withBoundaryContainer<P>(
     ReactNative: { [prop: string]: any },
-    pointcut: ComponentPointcut
-): React.ComponentType {
-    return class extends React.Component<ContainerProps, ContainerState> {
+    pointcut: ComponentPointcut<P>
+): React.ComponentType<P> {
+    return class extends React.Component<ContainerProps & P, ContainerState> {
 
         state: ContainerState = {
             error: null,
