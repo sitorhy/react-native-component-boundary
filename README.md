@@ -1,6 +1,6 @@
 # react-native-component-boundary
 
-React error boundary component.
+React native error boundary component.
 
 ## Usage
 

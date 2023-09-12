@@ -3,7 +3,7 @@ import {ComponentPointcut} from "../components/common";
 import unexpectedCatch from "./unexpectedCatch";
 import useErrorBoundary from "./useErrorBoundary";
 
-function EmptyFunctionComponent() {
+function EmptyFunctionComponent(): null {
     return null;
 }
 
@@ -14,11 +14,11 @@ type ContainerState = {
     errorInfo: React.ErrorInfo | null;
 };
 
-export default function withBoundaryContainer<P>(
+export default function withBoundaryContainer<P extends ContainerProps>(
     ReactNative: { [prop: string]: any },
     pointcut: ComponentPointcut<P>
 ): React.ComponentType<P> {
-    return class extends React.Component<ContainerProps & P, ContainerState> {
+    return class extends React.Component<P, ContainerState> {
 
         state: ContainerState = {
             error: null,

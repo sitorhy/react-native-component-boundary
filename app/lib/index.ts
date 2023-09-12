@@ -8,7 +8,7 @@ import CoreComponents from "./components/core";
 import AndroidComponents from "./components/android";
 import IosComponents from "./components/ios";
 
-function EmptyFunctionComponent() {
+function EmptyFunctionComponent(): null {
     return null;
 }
 
@@ -17,7 +17,7 @@ export interface ContextType {
         outerHandler: Function,
         pointcut: ComponentPointcut<P>
     ) => Function;
-    withBoundaryContainer: <P>(
+    withBoundaryContainer: <P extends { [key: string]: any }>(
         pointcut: ComponentPointcut<P>
     ) => React.ComponentType<P>;
 }
@@ -40,7 +40,7 @@ export default function (
             }
             return useErrorBoundary(ReactNative, outerHandler, pointcut);
         },
-        withBoundaryContainer: <P>(pointcut: ComponentPointcut<P>) => {
+        withBoundaryContainer: <P extends { [key: string]: any }>(pointcut: ComponentPointcut<P>) => {
             if (!options.enable) {
                 return pointcut.component || EmptyFunctionComponent;
             }
