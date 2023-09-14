@@ -18,7 +18,7 @@ export default function withBoundaryContainer<P extends ContainerProps>(
     ReactNative: { [prop: string]: any },
     pointcut: ComponentPointcut<P>
 ): React.ComponentType<P> {
-    return class extends React.Component<P, ContainerState> {
+    return class extends React.Component<P & ContainerProps, ContainerState> {
 
         state: ContainerState = {
             error: null,
@@ -32,6 +32,13 @@ export default function withBoundaryContainer<P extends ContainerProps>(
             });
         }
 
+        resetError() {
+            this.setState({
+                error: null,
+                errorInfo: null
+            });
+        }
+
         render() {
             if (this.state.error) {
                 if (typeof pointcut.fallbackComponent === "function") {
@@ -39,7 +46,10 @@ export default function withBoundaryContainer<P extends ContainerProps>(
                         const fallbackNode = pointcut.fallbackComponent({
                             error: this.state.error,
                             errorInfo: this.state.errorInfo,
-                            pointcut
+                            pointcut,
+                            resetError: () => {
+                                this.resetError();
+                            }
                         });
                         return React.isValidElement(fallbackNode)
                             ? fallbackNode
@@ -60,7 +70,15 @@ export default function withBoundaryContainer<P extends ContainerProps>(
                 });
             }
 
-            return React.createElement(pointcut.component || EmptyFunctionComponent, injection);
+            if (pointcut.component) {
+                if (typeof pointcut.component === "function" || typeof pointcut.component === "object") {
+                    return React.createElement(pointcut.component, injection);
+                } else {
+                    return React.createElement(EmptyFunctionComponent, injection);
+                }
+            } else {
+                return this.props.children;
+            }
         }
     };
 }

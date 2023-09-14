@@ -15,4 +15,5 @@ export interface FallbackProps<P> {
     error: unknown;
     errorInfo?: React.ErrorInfo | null;
     pointcut: ComponentPointcut<P>;
+    resetError?: () => void;
 }
